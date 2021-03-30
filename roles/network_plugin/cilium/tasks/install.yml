@@ -33,13 +33,14 @@
     - {name: cilium, file: cilium-config.yml, type: cm}
     - {name: cilium, file: cilium-crb.yml, type: clusterrolebinding}
     - {name: cilium, file: cilium-cr.yml, type: clusterrole}
-    - {name: cilium, file: cilium-secret.yml, type: secret, when: cilium_ipsec_enabled}
     - {name: cilium, file: cilium-ds.yml, type: ds}
     - {name: cilium, file: cilium-deploy.yml, type: deploy}
     - {name: cilium, file: cilium-sa.yml, type: sa}
+    - {name: cilium, file: cilium-secret.yml, type: secret}
   register: cilium_node_manifests
   when:
     - inventory_hostname in groups['kube_control_plane']
+    - "cilium_ipsec_enabled|bool or item.file != 'cilium-secret.yml'"
 
 - name: Cilium | Enable portmap addon
   template:
