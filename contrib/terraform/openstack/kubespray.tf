@@ -108,3 +108,11 @@ output "k8s_node_fips" {
 output "bastion_fips" {
   value = module.ips.bastion_fips
 }
+
+output "k8s_master_secgroup_id" {
+  value = module.compute.k8s_master_secgroup_id
+}
+
+output "k8s_worker_secgroup_id" {
+  value = module.compute.k8s_worker_secgroup_id
+}
